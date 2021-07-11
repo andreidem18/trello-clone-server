@@ -1,4 +1,4 @@
-from django.conf import settings
+from django.contrib.auth import get_user_model
 from django.db import models
 from cards.models import Card
 from core.models import BaseModel
@@ -8,12 +8,12 @@ class ItemChecklist(BaseModel):
     due_to = models.DateField()
     done = models.BooleanField()
     responsibles = models.ManyToManyField(
-        settings.AUTH_USER_MODEL,
+        get_user_model(),
         related_name='tasks'
     )
     card = models.ForeignKey(
         Card,
-        related_name='comments',
+        related_name='items_checklist',
         on_delete=models.SET_NULL,
         null = True
     )

@@ -1,4 +1,4 @@
-from django.conf import settings
+from django.contrib.auth import get_user_model
 from lists.models import List
 from django.db import models
 
@@ -14,7 +14,7 @@ class Card(BaseModel):
     )
     description = models.TextField()
     creator = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
+        get_user_model(),
         on_delete=models.SET_NULL,
         null=True
     )

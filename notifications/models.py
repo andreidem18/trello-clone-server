@@ -1,4 +1,4 @@
-from django.conf import settings
+from django.contrib.auth import get_user_model
 from boards.models import Board
 from django.db import models
 from core.models import BaseModel
@@ -13,7 +13,7 @@ class Notification(BaseModel):
         null = True
     )
     user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
+        get_user_model(),
         related_name='notifications',
         on_delete=models.SET_NULL,
         null = True

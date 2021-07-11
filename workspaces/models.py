@@ -1,5 +1,5 @@
 from django.db import models
-from django.conf import settings
+from django.contrib.auth import get_user_model
 from core.models import BaseModel
 
 class Workspace(BaseModel):
@@ -7,7 +7,7 @@ class Workspace(BaseModel):
     type = models.CharField(max_length=100)
     img_url = models.CharField(max_length=200)
     members = models.ManyToManyField(
-        settings.AUTH_USER_MODEL,
+        get_user_model(),
         related_name='workspaces'
     )
 

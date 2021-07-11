@@ -1,4 +1,4 @@
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from cards.models import Card
 from django.db import models
 from core.models import BaseModel
@@ -6,7 +6,7 @@ from core.models import BaseModel
 class Comment(BaseModel):
     text = models.TextField()
     creator = models.ForeignKey(
-        User,
+        get_user_model(),
         related_name='comments',
         on_delete=models.SET_NULL,
         null = True
