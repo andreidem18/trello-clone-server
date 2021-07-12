@@ -4,9 +4,9 @@ from django.conf import settings
 class UserSerializer(ModelSerializer):
     class Meta:
         model = settings.AUTH_USER_MODEL
-        fields = ('username', 'email')
+        fields = ('username', 'email', 'firstname', 'lastname')
 
 class CreateUserSerializer(ModelSerializer):
     class Meta:
         model = settings.AUTH_USER_MODEL
-        fields = ('username', 'email', 'password')
+        fields = ('email', 'password', 'firstname', 'lastname')

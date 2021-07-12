@@ -10,6 +10,11 @@ class Workspace(BaseModel):
         get_user_model(),
         related_name='workspaces'
     )
+    owner = models.ForeignKey(
+        get_user_model(),
+        on_delete = models.SET_NULL,
+        null = True
+    )
 
     def __str__(self):
         return self.name
