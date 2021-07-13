@@ -6,7 +6,7 @@ from core.models import BaseModel
 class ItemChecklist(BaseModel):
     task = models.CharField(max_length=200)
     due_to = models.DateField()
-    done = models.BooleanField()
+    done = models.BooleanField(default=False)
     responsibles = models.ManyToManyField(
         get_user_model(),
         related_name='tasks'

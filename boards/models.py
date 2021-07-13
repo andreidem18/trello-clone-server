@@ -15,14 +15,15 @@ class Board(BaseModel):
     )
     favorite = models.ManyToManyField(
         get_user_model(),
-        related_name='favorite_boards'
+        related_name='favorite_boards',
+        blank=True
     )
     is_public = models.BooleanField()
     members = models.ManyToManyField(
         get_user_model(),
         related_name='boards'
     )
-    Workspace= models.ForeignKey(
+    workspace= models.ForeignKey(
         Workspace,
         related_name='boards',
         on_delete=models.SET_NULL,

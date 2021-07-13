@@ -7,7 +7,6 @@ from workspaces.models import Workspace
 from django.shortcuts import get_object_or_404
 from rest_framework.viewsets import ModelViewSet
 from django.contrib.auth import get_user_model
-from django.core.mail import send_mail
 from rest_framework.decorators import action
 from .tasks import notification_email
 
@@ -25,7 +24,7 @@ class WorkspaceViewSet(ModelViewSet):
         return self.queryset.filter(**data)
 
     def get_object(self):
-        return get_object_or_404(Workspace, id=self.kwargs['pk'])
+        return get_object_or_404(Workspace, id=self.kwargs['pk'])  
 
     def create(self, request, *args, **kwargs):
         data = request.data.copy()

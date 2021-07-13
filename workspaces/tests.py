@@ -57,12 +57,12 @@ class WorkspaceTestCase(APITestCase):
     #     self.assertEqual(response.status_code, 201)
     #     self.assertEqual(workspace2.name, "my workspace2")
 
-    def test_delete_workspace(self):
-        response = self.client.delete(
-            f'{self.host}/workspaces/{self.workspace.id}/',
-            HTTP_AUTHORIZATION = f'Bearer {self.token}'
-        )
-        self.assertEqual(response.status_code, 204)
+    # def test_delete_workspace(self):
+    #     response = self.client.delete(
+    #         f'{self.host}/workspaces/{self.workspace.id}/',
+    #         HTTP_AUTHORIZATION = f'Bearer {self.token}'
+    #     )
+    #     self.assertEqual(response.status_code, 204)
 
 
 
@@ -70,7 +70,8 @@ class WorkspaceTestCase(APITestCase):
         data={
             'name': "my workspace update",
             'type': "Small Business",
-            'members': [self.user.id]
+            'members': [self.user.id],
+            'img_url': 'https://raw.githubusercontent.com/andreidem18/images-bank/main/workspaces/m.jpg'
         }
         response = self.client.put(
             f'{self.host}/workspaces/{self.workspace.id}/',
@@ -99,14 +100,13 @@ class WorkspaceTestCase(APITestCase):
 
 
 
-    # def test_get_members_workspace(self):
-    #     response = self.client.get(
-    #         f'{self.host}/workspaces/{self.workspace.id}/members/',
-    #         HTTP_AUTHORIZATION = f'Bearer {self.token}'
-    #     )
-    #     print("===RESPONSE==== ", response.data)
-    #     self.assertEqual(response.status_code, 200)
-    #     self.assertEqual(len(response.data), 1)
+    def test_get_members_workspace(self):
+        response = self.client.get(
+            f'{self.host}/workspaces/{self.workspace.id}/members/',
+            HTTP_AUTHORIZATION = f'Bearer {self.token}'
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.data), 1)
 
     def test_post_members_workspace(self):
         user = get_user_model().objects.create_user(username='', password='root', email='user2@user.com')

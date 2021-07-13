@@ -15,6 +15,7 @@ Including another URLconf
 """
 from users.views import UserViewSet
 from workspaces.views import WorkspaceViewSet
+from boards.views import BoardViewSet
 from django.contrib import admin
 from django.urls import path
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
@@ -40,6 +41,7 @@ schema_view = get_schema_view(
 router = DefaultRouter()
 router.register('users', UserViewSet)
 router.register('workspaces', WorkspaceViewSet)
+router.register('boards', BoardViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),

@@ -1,7 +1,7 @@
 from main.celery import app
 from django.core.mail import send_mail
 
-@app.task(name='send-notification-email-task')
+@app.task(name='send-email-about-workspace-task')
 def notification_email(user_name, workspace, emails):
     send_mail(
         subject="New Workspace",
