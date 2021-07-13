@@ -95,58 +95,56 @@ class BoardTestCase(APITestCase):
             data= data,
             fromat = 'json'
         )
-        print("===RESPONSE===", response.data)
         self.board.refresh_from_db()
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.data['name'], self.board.name)
 
 
-    # def test_patch_board(self):
-    #     data={
-    #         'name': "my board update",
-    #     }
-    #     response = self.client.patch(
-    #         f'{self.host}/boards/{self.board.id}/',
-    #         HTTP_AUTHORIZATION = f'Bearer {self.token}',
-    #         data= data,
-    #         fromat = 'json'
-    #     )
-    #     self.board.refresh_from_db()
-    #     self.assertEqual(response.status_code, 200)
-    #     self.assertEqual(response.data['name'], self.board.name)
+    def test_patch_board(self):
+        data={
+            'name': "my board update",
+        }
+        response = self.client.patch(
+            f'{self.host}/boards/{self.board.id}/',
+            HTTP_AUTHORIZATION = f'Bearer {self.token}',
+            data= data,
+            fromat = 'json'
+        )
+        self.board.refresh_from_db()
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data['name'], self.board.name)
 
 
 
-    # def test_get_members_board(self):
-    #     response = self.client.get(
-    #         f'{self.host}/boards/{self.board.id}/members/',
-    #         HTTP_AUTHORIZATION = f'Bearer {self.token}'
-    #     )
-    #     print("===RESPONSE==== ", response.data)
-    #     self.assertEqual(response.status_code, 200)
-    #     self.assertEqual(len(response.data), 1)
+    def test_get_members_board(self):
+        response = self.client.get(
+            f'{self.host}/boards/{self.board.id}/members/',
+            HTTP_AUTHORIZATION = f'Bearer {self.token}'
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.data), 1)
 
-    # def test_post_members_board(self):
-    #     user = get_user_model().objects.create_user(username='', password='root', email='user2@user.com')
-    #     response = self.client.post(
-    #         f'{self.host}/boards/{self.board.id}/members/',
-    #         HTTP_AUTHORIZATION = f'Bearer {self.token}',
-    #         data = {'members': [user.id]},
-    #         format = 'json'
-    #     )
-    #     self.board.refresh_from_db()
-    #     self.assertEqual(response.status_code, 201)
-    #     self.assertEqual(self.board.members.all().count(), 2)
+    def test_post_members_board(self):
+        user = get_user_model().objects.create_user(password='root', email='user2@user.com')
+        response = self.client.post(
+            f'{self.host}/boards/{self.board.id}/members/',
+            HTTP_AUTHORIZATION = f'Bearer {self.token}',
+            data = {'members': [user.id]},
+            format = 'json'
+        )
+        self.board.refresh_from_db()
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(self.board.members.all().count(), 2)
 
-    # def test_delete_members_board(self):
-    #     response = self.client.delete(
-    #         f'{self.host}/boards/{self.board.id}/members/',
-    #         HTTP_AUTHORIZATION = f'Bearer {self.token}',
-    #         data = {'members': [self.user.id]},
-    #         format = 'json'
-    #     )
-    #     self.board.refresh_from_db()
-    #     self.assertEqual(response.status_code, 204)
-    #     self.assertEqual(self.board.members.all().count(), 0)
+    def test_delete_members_board(self):
+        response = self.client.delete(
+            f'{self.host}/boards/{self.board.id}/members/',
+            HTTP_AUTHORIZATION = f'Bearer {self.token}',
+            data = {'members': [self.user.id]},
+            format = 'json'
+        )
+        self.board.refresh_from_db()
+        self.assertEqual(response.status_code, 204)
+        self.assertEqual(self.board.members.all().count(), 0)
 
 

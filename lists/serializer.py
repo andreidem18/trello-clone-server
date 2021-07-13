@@ -4,4 +4,4 @@ from .models import List
 class ListSerializer(ModelSerializer):
     class Meta:
         model = List
-        fields = ('name', 'board', 'position')
+        fields = ('id', 'name', 'board', 'position')
