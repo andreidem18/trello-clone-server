@@ -2,7 +2,7 @@ from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from boards.models import Board
-from lists.serializer import ListSerializer
+from lists.serializer import ListSerializer, ModifyListSerializer
 from lists.models import List
 from rest_framework.viewsets import ModelViewSet
 
@@ -16,6 +16,12 @@ class ListViewSet(ModelViewSet):
             for k, v in self.request.query_params.items():
                 data[k] = v
         return self.queryset.filter(**data)
+
+
+    def get_serializer_class(self):
+        if self.request.method in ['PUT', 'PATCH']:
+            return ModifyListSerializer
+        return super().get_serializer_class()
 
 
 

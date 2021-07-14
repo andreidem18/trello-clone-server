@@ -5,3 +5,9 @@ class ListSerializer(ModelSerializer):
     class Meta:
         model = List
         fields = ('id', 'name', 'board', 'position')
+
+
+class ModifyListSerializer(ModelSerializer):
+    class Meta:
+        model = List
+        fields = ('id', 'name', 'board')
