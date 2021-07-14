@@ -6,3 +6,8 @@ class NotificationSerializer(ModelSerializer):
         model = Notification
         fields = ('text', 'url', 'img_url', 'user')
 
+class GetNotificationsSerializer(ModelSerializer):
+    class Meta:
+        model = Notification
+        fields = ('id', 'text', 'url', 'img_url', 'seen')
+
