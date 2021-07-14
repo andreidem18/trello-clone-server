@@ -51,24 +51,24 @@ class BoardTestCase(APITestCase):
         self.assertEqual(response.data["name"], self.board.name)
 
 
-    # def test_post_board(self):
-    #     data={
-    #         'name': "my board2",
-    #         'description': "Board to test",
-    #         'members': [self.user.id],
-    #         'img_url': "https://raw.githubusercontent.com/andreidem18/images-bank/main/templates/1.jpg",
-    #         'is_public': True,
-    #         'workspace': self.workspace
-    #     }
-    #     response = self.client.post(
-    #         f'{self.host}/boards/',
-    #         HTTP_AUTHORIZATION = f'Bearer {self.token}',
-    #         data= data,
-    #         fromat = 'json'
-    #     )
-    #     board2 = Board.objects.get(id = response.data['id'])
-    #     self.assertEqual(response.status_code, 201)
-    #     self.assertEqual(board2.name, "my board2")
+    def test_post_board(self):
+        data={
+            'name': "my board2",
+            'description': "Board to test",
+            'members': [self.user.id],
+            'img_url': "https://raw.githubusercontent.com/andreidem18/images-bank/main/templates/1.jpg",
+            'is_public': True,
+            'workspace': self.workspace.id
+        }
+        response = self.client.post(
+            f'{self.host}/boards/',
+            HTTP_AUTHORIZATION = f'Bearer {self.token}',
+            data= data,
+            format = 'json'
+        )
+        board2 = Board.objects.get(id = response.data['id'])
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(board2.name, "my board2")
 
     def test_delete_board(self):
         response = self.client.delete(

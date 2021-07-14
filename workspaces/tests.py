@@ -40,28 +40,28 @@ class WorkspaceTestCase(APITestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.data["name"], self.workspace.name)
 
-    # def test_post_workspace(self):
-    #     data={
-    #         'name': "my workspace2",
-    #         'type': "Small Business",
-    #         'members': []
-    #     }
-    #     response = self.client.post(
-    #         f'{self.host}/workspaces/',
-    #         HTTP_AUTHORIZATION = f'Bearer {self.token}',
-    #         data= data,
-    #         fromat = 'json'
-    #     )
-    #     workspace2 = Workspace.objects.get(id = response.data['id'])
-    #     self.assertEqual(response.status_code, 201)
-    #     self.assertEqual(workspace2.name, "my workspace2")
+    def test_post_workspace(self):
+        data={
+            'name': "my workspace2",
+            'type': "Small Business",
+            'members': []
+        }
+        response = self.client.post(
+            f'{self.host}/workspaces/',
+            HTTP_AUTHORIZATION = f'Bearer {self.token}',
+            data= data,
+            format = 'json'
+        )
+        workspace2 = Workspace.objects.get(id = response.data['id'])
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(workspace2.name, "my workspace2")
 
-    # def test_delete_workspace(self):
-    #     response = self.client.delete(
-    #         f'{self.host}/workspaces/{self.workspace.id}/',
-    #         HTTP_AUTHORIZATION = f'Bearer {self.token}'
-    #     )
-    #     self.assertEqual(response.status_code, 204)
+    def test_delete_workspace(self):
+        response = self.client.delete(
+            f'{self.host}/workspaces/{self.workspace.id}/',
+            HTTP_AUTHORIZATION = f'Bearer {self.token}'
+        )
+        self.assertEqual(response.status_code, 204)
 
 
 
