@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from .serializer import CardSerializer, ModifyCardSerializer
 from .models import Card
 from rest_framework.viewsets import ModelViewSet
+from .tasks import notificate_deadline
 
 class CardViewSet(ModelViewSet):
     queryset = Card.objects.all()
@@ -27,13 +28,17 @@ class CardViewSet(ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         data = request.data.copy()
+        data["creator"] = request.user.id
+        my_list = List.objects.get(id = data["list"])
 
-        #To configure the default position
-        list = List.objects.get(id = data["list"])
+        # To configure the default position
         positions = []
-        for card in list.cards.all():
+        for card in my_list.cards.all():
             positions.append(card.position)
-        data["position"] = max(positions) + 1
+        if positions:
+            data["position"] = max(positions) + 1
+        else:
+            data["position"] = 1
         serialized = CardSerializer(data = data)
 
         if not serialized.is_valid():
@@ -42,6 +47,18 @@ class CardViewSet(ModelViewSet):
                 data = serialized.errors
             )
         serialized.save()
+
+        # To notify at the deadline of the card
+        card = Card.objects.get(id = serialized.data["id"])
+        members = card.list.board.members.values()
+        img = card.list.board.img_url
+        print("===EMAIL===", members[0]['email'])
+        card.task_id = notificate_deadline.apply_async(
+            args=[list(members), data["name"], img],
+            eta = card.deadline
+        )
+        card.save()
+
         return Response(
             data = serialized.data,
             status = status.HTTP_201_CREATED
@@ -51,7 +68,7 @@ class CardViewSet(ModelViewSet):
 
     @action(methods = ['POST'], detail = True)
     def position(self, request, pk):
-        
+
         # Algorithm to reorganizate all the positions when one of them changes
         card = Card.objects.get(id = pk)
         list = card.list
@@ -77,3 +94,6 @@ class CardViewSet(ModelViewSet):
         card.position = new_position
         card.save()
         return Response(status=status.HTTP_200_OK)
+
+
+
