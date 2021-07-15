@@ -52,7 +52,6 @@ class CardViewSet(ModelViewSet):
         card = Card.objects.get(id = serialized.data["id"])
         members = card.list.board.members.values()
         img = card.list.board.img_url
-        print("===EMAIL===", members[0]['email'])
         card.task_id = notificate_deadline.apply_async(
             args=[list(members), data["name"], img],
             eta = card.deadline
