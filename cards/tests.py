@@ -37,7 +37,7 @@ class CardTestCase(APITestCase):
             name="my card",
             list=self.my_list,
             description = "Card test",
-            deadline = datetime.now(),
+            deadline = str(datetime.now()),
             position = 1
         )
         response = self.client.post(
@@ -68,7 +68,7 @@ class CardTestCase(APITestCase):
             'name': "my card2",
             'list': self.my_list.id,
             'description': "Card test",
-            'deadline': datetime.now(),
+            'deadline': str(datetime.now()),
             'position': 1
         }
         response = self.client.post(

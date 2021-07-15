@@ -1,14 +1,13 @@
-from django.contrib.auth import get_user_model
+from users.models import User
 from django.db import models
 from cards.models import Card
 from core.models import BaseModel
 
 class ItemChecklist(BaseModel):
     task = models.CharField(max_length=200)
-    due_to = models.DateField()
-    done = models.BooleanField(default=False)
+    done = models.BooleanField(default=False, null=True, blank=True)
     responsibles = models.ManyToManyField(
-        get_user_model(),
+        User,
         related_name='tasks'
     )
     card = models.ForeignKey(
