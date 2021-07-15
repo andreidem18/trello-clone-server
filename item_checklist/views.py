@@ -14,6 +14,12 @@ class ItemChecklistViewSet(ModelViewSet):
     queryset = ItemChecklist.objects.all()
     serializer_class = ItemSerializer
 
+    def get_queryset(self):
+        data = {}
+        if self.request.query_params:
+            for k, v in self.request.query_params.items():
+                data[k] = v
+        return self.queryset.filter(**data)
 
     def create(self, request, *args, **kwargs):
         notify(request.user.firstname, request.data['task'], request.data["card"], request.data["responsibles"])
