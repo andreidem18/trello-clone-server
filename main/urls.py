@@ -19,6 +19,7 @@ from users.views import UserViewSet
 from workspaces.views import WorkspaceViewSet
 from boards.views import BoardViewSet
 from item_checklist.views import ItemChecklistViewSet
+from comments.views import CommentViewSet
 from django.contrib import admin
 from django.urls import path
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
@@ -48,6 +49,7 @@ router.register('boards', BoardViewSet)
 router.register('lists', ListViewSet)
 router.register('cards', CardViewSet)
 router.register('items', ItemChecklistViewSet)
+router.register('comments', CommentViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),

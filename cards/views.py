@@ -51,7 +51,8 @@ class CardViewSet(ModelViewSet):
 
     @action(methods = ['POST'], detail = True)
     def position(self, request, pk):
-        # Algorithm to reorganizate all the position when one of the card change it
+        
+        # Algorithm to reorganizate all the positions when one of them changes
         card = Card.objects.get(id = pk)
         list = card.list
         current_position = card.position

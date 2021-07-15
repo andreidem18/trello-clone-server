@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'notifications.apps.NotificationsConfig',
     'users.apps.UsersConfig',
     'workspaces.apps.WorkspacesConfig',
+    'comments.apps.CommentsConfig',
     'rest_framework',
     'drf_yasg'
 ]
