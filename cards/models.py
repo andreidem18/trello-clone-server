@@ -20,6 +20,7 @@ class Card(BaseModel):
     )
     deadline = models.DateTimeField()
     position = models.IntegerField()
+    task_id = models.CharField(max_length=50, blank=True, null=True)
 
     def __str__(self):
         return self.name

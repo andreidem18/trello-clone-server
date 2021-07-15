@@ -14,6 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from lists.views import ListViewSet
+from cards.views import CardViewSet
 from users.views import UserViewSet
 from workspaces.views import WorkspaceViewSet
 from boards.views import BoardViewSet
@@ -44,6 +45,7 @@ router.register('users', UserViewSet)
 router.register('workspaces', WorkspaceViewSet)
 router.register('boards', BoardViewSet)
 router.register('lists', ListViewSet)
+router.register('cards', CardViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
