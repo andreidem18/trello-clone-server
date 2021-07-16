@@ -4,7 +4,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import action
-from users.serializer import MyUserSerializer, UpdateUserSerializer, UserSerializer, CreateUserSerializer
+from users.serializer import MyUserSerializer, UpdateUserSerializer, UserSerializer
 from users.serializer import UserSerializer
 from .models import User
 
@@ -21,18 +21,18 @@ class UserViewSet(ModelViewSet):
                 data[k] = v
         return self.queryset.filter(**data)
 
-    def get_serializer_class(self):
-        if self.request.method == 'POST':
-            return CreateUserSerializer
-        return super().get_serializer_class()
-
 
 
     def create(self, request, *args, **kwargs):
-        notification_email.apply_async(
-            args = [request.data["firstname"], request.data["email"]]
+        user = User.objects.create_user(
+            firstname = request.data["firstname"],
+            lastname = request.data["lastname"],
+            email = request.data["email"]
         )
-        return super().create(request, *args, **kwargs)
+        user.set_password(request.data["password"])
+        user.save()
+        serialized = UpdateUserSerializer(user)
+        return Response(status = status.HTTP_201_CREATED, data = serialized.data)
 
 
 

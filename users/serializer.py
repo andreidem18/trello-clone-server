@@ -21,13 +21,7 @@ class MyUserSerializer(ModelSerializer):
         fields = ('id', 'email', 'firstname', 'lastname', 'notifications', 'workspaces')
 
 
-class CreateUserSerializer(ModelSerializer):
-    class Meta:
-        model = User
-        fields = ('id', 'email', 'password', 'firstname', 'lastname')
-
-
 class UpdateUserSerializer(ModelSerializer):
     class Meta:
         model = User
-        fields = ('email', 'firstname', 'lastname')
+        fields = ('id', 'email', 'firstname', 'lastname')

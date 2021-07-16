@@ -28,6 +28,8 @@ from datetime import timedelta
 
 ALLOWED_HOSTS = []
 
+TIME_ZONE = "America/Bogota"
+
 
 # Application definition
 

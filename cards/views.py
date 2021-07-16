@@ -1,4 +1,5 @@
 from lists.models import List
+from datetime import datetime, timedelta
 from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -54,7 +55,8 @@ class CardViewSet(ModelViewSet):
         img = card.list.board.img_url
         card.task_id = notificate_deadline.apply_async(
             args=[list(members), data["name"], img],
-            eta = card.deadline
+            # eta = card.deadline
+            eta = datetime.now() + timedelta(minutes=1)
         )
         card.save()
 
